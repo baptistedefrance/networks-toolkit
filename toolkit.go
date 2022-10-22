@@ -2,8 +2,26 @@ package main
 
 import "fmt"
 import "net"
+import "net/http"
 import "log"
 import "time"
+
+
+
+
+
+func createPost() {
+    port := ""
+    fmt.Println("Please choose a port :")
+    fmt.Scan(&port)
+    http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        fmt.Fprintf(w, "Welcome to new server!")
+    })
+
+    // listen to port
+    http.ListenAndServe(":"+port, nil)
+}
+
 
 
 
@@ -69,11 +87,12 @@ func isLocalhostOnline() {
 
 func menu() {
 	choice := ""
-	tab := [4]string{}
+	tab := [5]string{}
 	tab[0] = "Verify is IP is private = 1"
 	tab[1] = "Find an IP with a domain name = 2"
 	tab[2] = "Verify is a website is online = 3"
 	tab[3] = "Verify if your localhost is online = 4"
+    tab[4] = "Create a web server = 5"
 	for _, value := range tab {
 		fmt.Println("\n"+value)
 	}
@@ -95,8 +114,12 @@ func menu() {
 	case "4":
 		isLocalhostOnline()
 		menu()
-		break
-	};
+        break
+	case "5":
+        createPost()
+        menu()
+        break
+    };
 }
 
 
